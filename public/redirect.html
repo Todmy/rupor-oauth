@@ -6,19 +6,27 @@
 </head>
 <body>
 <script>
-    const paramsArr = location.search.slice(1).split('=');
+    function tryToAuth(code) {
+        const xhr = new XMLHttpRequest();
 
-    const xhr = new XMLHttpRequest();
+        const json = JSON.stringify({
+            provider: 'facebook',
+            code
+        });
 
-    const json = JSON.stringify({
-        provider: 'facebook',
-        code: paramsArr[1]
-    });
+        xhr.open("POST", '/session', true);
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
-    xhr.open("POST", '/session', true);
-    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.send(json);
+    }
 
-    xhr.send(json);
+    const code = location.search.slice(1).split('=')[1];
+
+    if(code) {
+        tryToAuth(code);
+    }
 </script>
+
+<a href="http://localhost:4444/api">api test</a>
 </body>
 </html>

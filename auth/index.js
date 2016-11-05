@@ -1,3 +1,7 @@
 const authRoutes = require('./auth-routes');
+const { authGuard } = require('./auth-helpers');
 
-module.exports.routes = authRoutes;
+module.exports = {
+    authRoutes,
+    authGuard
+};

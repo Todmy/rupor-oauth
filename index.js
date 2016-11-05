@@ -1,13 +1,21 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-var mongoose   = require('mongoose');
+const mongoose = require('mongoose');
+const session = require('express-session');
+
 
 const config = require('./config');
 const appRouter = require('./router');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongo.url);
+
+app.use(session({
+    secret: config.secret,
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
